@@ -1,0 +1,7 @@
+OwnerID(Int),OwnerName(VarChar),OwnerInfo(VarChar)
+1,Andrew,Loser
+2,Bob,Superloser
+3,Charry,Omegaloser
+4,Derek,Notaloser
+5,Eric,Soreloser
+6,Frank,Winner

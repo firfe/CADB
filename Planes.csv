@@ -1,0 +1,7 @@
+TailNumber(Int),PlaneType(VarChar),CustomerID(Int),OperatorNumber(Int),OwnderID(Int)
+12345,RX1,1,6,1
+23456,RX2,2,5,2
+34567,RX3,3,4,3
+45678,RX4,4,3,4
+56789,RX5,5,2,5
+67890,RX6,6,1,6
