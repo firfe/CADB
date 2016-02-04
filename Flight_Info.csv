@@ -1,0 +1,5 @@
+1,1-2-15,1-3-15,Company1,ArrivalAirport1,DestinationAirport1,true,false,1,1
+2,2-25-15,2-27-15,Company2,ArrivalAirport2,DestinationAirport1,false,false,2,2
+3,2-12-14,2-15-14,company3,ArrivalAirport2,DestinationAirport3,true,true,3,3
+4,11-15-14,11-17-14,company1,ArrivalAirport4,DestionationAirport5,false,false,4,4
+5,9-1-14,9-5-14,company7,ArrivalAirport3,DestinationAirport9,true,true,5,5
