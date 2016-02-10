@@ -3,6 +3,8 @@ package sql;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -67,6 +69,37 @@ public class SQLConnection {
         }
 
         return rs;
+    }
+
+    public HashMap<String, ArrayList<String>> getTableColumnNames() throws SQLException {
+        HashMap<String, ArrayList<String>> tableColumnNames = new HashMap<>();
+        ArrayList<String> tableNames = getTableNames();
+        for (String tableName : tableNames) {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("describe " + tableName);
+            ArrayList<ArrayList<String>> arrayList = SQLTableView.convertToArrayList(rs);
+            ArrayList<String> columnNames = new ArrayList<>();
+            for (ArrayList<String> list : arrayList) {
+                columnNames.add(list.get(0));
+            }
+            /* remove table column name */
+            columnNames.remove(0);
+            tableColumnNames.put(tableName, columnNames);
+        }
+        return tableColumnNames;
+    }
+
+    public ArrayList<String> getTableNames() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("show tables");
+        ArrayList<ArrayList<String>> arrayList = SQLTableView.convertToArrayList(rs);
+        ArrayList<String> tableNames = new ArrayList<>();
+        for (ArrayList<String> list : arrayList) {
+            tableNames.add(list.get(0));
+        }
+        /* remove table column name */
+        tableNames.remove(0);
+        return tableNames;
     }
 
     private int countSubstrings(String query, String substring) {

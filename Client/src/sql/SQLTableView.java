@@ -32,29 +32,25 @@ import java.util.Scanner;
  */
 public class SQLTableView extends TableView {
 
-    public static TableView create(ResultSet resultSet) throws SQLException {
+    public static TableView<ObservableList<String>> create(ResultSet resultSet) throws SQLException {
         return create(convertToArrayList(resultSet));
     }
 
-    public static TableView create(String fileName) throws SQLException, FileNotFoundException {
+    public static TableView<ObservableList<String>> create(String fileName) throws SQLException, FileNotFoundException {
         return create(convertToArrayList(fileName));
     }
 
-    public static TableView create(ArrayList<ArrayList<String>> data) throws SQLException {
-        ObservableList<ObservableList> tableData = FXCollections.observableArrayList();
-        TableView tableView = new TableView();
+    public static TableView<ObservableList<String>> create(ArrayList<ArrayList<String>> data) throws SQLException {
+        ObservableList<ObservableList<String>> tableData = FXCollections.observableArrayList();
+        TableView<ObservableList<String>> tableView = new TableView<>();
 
         /* add columns names */
         final ArrayList<String> colNames = data.get(0);
         for (int i = 0; i < colNames.size(); i++) {
-            TableColumn column = new TableColumn(colNames.get(i));
+            TableColumn<ObservableList<String>, String> column = new TableColumn<>(colNames.get(i));
             column.prefWidthProperty().bind(tableView.widthProperty().divide(colNames.size()).subtract(1.0));
             final int finalI = i;
-            column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                    return new SimpleStringProperty(param.getValue().get(finalI).toString());
-                }
-            });
+            column.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get(finalI)));
             tableView.getColumns().add(column);
         }
 
@@ -66,25 +62,19 @@ public class SQLTableView extends TableView {
         tableView.setRowFactory(param -> {
             final TableRow<ObservableList<String>> row = new TableRow<>();
             row.setOnMouseClicked((event) -> {
-
-            });
-            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                        ObservableList<String> rowData = row.getItem();
-                        Stage stage = new Stage();
-                        VBox vBox = new VBox(10);
-                        vBox.setPadding(new Insets(10));
-                        for (int i = 0; i < rowData.size(); i++) {
-                            Text t = new Text(colNames.get(i) + ": " + rowData.get(i));
-                            vBox.getChildren().add(t);
-                        }
-                        stage.setScene(new Scene(vBox));
-                        stage.setResizable(false);
-                        stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.show();
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    ObservableList<String> rowData = row.getItem();
+                    Stage stage = new Stage();
+                    VBox vBox = new VBox(10);
+                    vBox.setPadding(new Insets(10));
+                    for (int i = 0; i < rowData.size(); i++) {
+                        Text t = new Text(colNames.get(i) + ": " + rowData.get(i));
+                        vBox.getChildren().add(t);
                     }
+                    stage.setScene(new Scene(vBox));
+                    stage.setResizable(false);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
                 }
             });
             return row;
@@ -92,7 +82,7 @@ public class SQLTableView extends TableView {
         return tableView;
     }
 
-    private static ArrayList<ArrayList<String>> convertToArrayList(ResultSet rs) throws SQLException {
+    public static ArrayList<ArrayList<String>> convertToArrayList(ResultSet rs) throws SQLException {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ResultSetMetaData metaData = rs.getMetaData();
 
@@ -119,13 +109,13 @@ public class SQLTableView extends TableView {
     }
 
     private static ArrayList<ArrayList<String>> convertToArrayList(String fileName) throws SQLException, FileNotFoundException {
-        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
         Scanner in = new Scanner(new File(fileName));
         while (in.hasNextLine()) {
             String line = in.nextLine();
             if (line.isEmpty()) break;
             String[] attrs = line.split(",");
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             Collections.addAll(list, attrs);
             data.add(list);
         }
