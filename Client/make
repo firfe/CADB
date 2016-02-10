@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf out/
+mkdir out
+javac -sourcepath src/ -d out src/*.java src/control/*.java src/scene/*.java src/sql/*.java
+java -cp "mysql-connector-java-5.1.38-bin.jar:out/" Client

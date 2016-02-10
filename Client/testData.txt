@@ -1,0 +1,7 @@
+Name,Phone,Street Address,City,State,Zip Code
+Home,425-788-9519,34416 NE 116th St,Carnation,WA,98014
+Western,360-650-6500,516 High St.,Bellingham,WA,98225
+Freshman Dorm,206-949-2701,WWU 109 Omega,Bellingham,WA,98225
+Sophomore Dorm,206-949-2701,WWU 915 Mathes,Bellingham,WA,98225
+Junior House,206-949-2701,2150 Douglas Ave #3,Bellingham,WA,98225
+Senior House,206-949-2701,1468 Fruitland Dr,Bellingham,WA,98226

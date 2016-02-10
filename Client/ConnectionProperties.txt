@@ -1,0 +1,4 @@
+dbUrl=jdbc:mysql://127.0.0.1:3306/test
+useSSL=true
+user=user
+password=cadb
